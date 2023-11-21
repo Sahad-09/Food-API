@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input and Button Example</title>
+</head>
+<body>
+
+    <form>
+        <!-- Input 1 -->
+        <label for="input1">itemName:</label>
+        <input type="text" id="input1" name="itemName" placeholder="Enter value for itemName 1" onChange="handleChange()">
+
+        <!-- Input 2 -->
+        <label for="input2">Description :</label>
+        <input type="text" id="input2" name="description" placeholder="Enter value for description" onChange="handleChange()">
+
+        <!-- Input 3 -->
+        <label for="input3">price :</label>
+        <input type="text" id="input3" name="price" placeholder="Enter value for price" onChange="handleChange()">
+
+        <!-- Button -->
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        function handleChange() {
+            // You can access the input values directly without using the DOM
+            var value1 = document.forms[0].elements.input1.value;
+            var value2 = document.forms[0].elements.input2.value;
+            var value3 = document.forms[0].elements.input3.value;
+
+            // You can do something with the values, like printing them to the console
+            console.log("Input 1:", value1);
+            console.log("Input 2:", value2);
+            console.log("Input 3:", value3);
+
+
+        }
+
+        function submitForm() {
+            // You can access the input values directly without using the DOM
+            var value1 = document.forms[0].elements.input1.value;
+            // var name1 = document.forms[0].elements.input1.name;
+
+            var value2 = document.forms[0].elements.input2.value;
+            // var name2 = document.forms[0].elements.input2.name;
+
+            var value3 = document.forms[0].elements.input3.value;
+            // var name1 = document.forms[0].elements.input1.name;
+
+            
+            let value={itemName:value1,description:value2,price:value3}
+            console.log(value);
+
+            axios.post('http://localhost:5000/api/admin/addfood',value)
+            .then((res)=>{
+                console.log(res.data);
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+            
+            
+            // console.log(value1);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 const express = require('express')
-const { View, Delete, Update, Register, Login ,AddFood} = require('../Controller/Admin_controller')
+const { View, Delete, Update, Register, Login ,AddFood, DeleteFood} = require('../Controller/Admin_controller')
 const routes = express.Router()
 const {body} = require('express-validator')
 const Auth = require('../middleware/Auth')
@@ -14,6 +14,7 @@ routes.post('/register',[
     body('address', "name must be more than 5 character").isLength({min:3}),
 ], Register)
 routes.post("/addfood",AddFood)
+routes.delete("/deletefood",DeleteFood)
 
 routes.post('/login', Login)
 

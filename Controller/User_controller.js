@@ -1,6 +1,5 @@
 const express = require('express')
-const AdminSchema = require('../Models/Admin')
-const MenuSchema = require('../Models/Menu')
+const UserSchema = require('../Models/User')
 const { body, validationResult} = require('express-validator')
 
 const bcrypt = require('bcryptjs')
@@ -18,7 +17,7 @@ const Register = async (req, res)=>{
             const success = false
             return res.status(400).json({success, error: error.array()})
         }
-        const check = await AdminSchema.findOne({email:email})
+        const check = await UserSchema.findOne({email:email})
         if(check){
             return res.json({message: "Email Already exist"})
         }
@@ -26,7 +25,7 @@ const Register = async (req, res)=>{
             // salt is a random number is generated to decrypt the password
             const salt = await bcrypt.genSalt(10)
             const secPass = await bcrypt.hash(password, salt)
-            const data = await new AdminSchema({
+            const data = await new UserSchema({
                 //schema name: variable names of this file
                 name: name,
                 phone: phone,
@@ -53,7 +52,7 @@ const Register = async (req, res)=>{
     const Login = async(req, res)=>{
         try{
             const {email, password} = req.body
-            const check = await AdminSchema.findOne({email:email})
+            const check = await UserSchema.findOne({email:email})
             if(!check){
                 return res.json({message: "Invalid email"})
             }
@@ -90,11 +89,11 @@ const Register = async (req, res)=>{
         try{
             let id = req.params.id
             if(id){
-                const data = await AdminSchema.findById(id)
+                const data = await UserSchema.findById(id)
                 res.json({success:true, data:data})
             }
             else{
-                const data = await AdminSchema.find()
+                const data = await UserSchema.find()
                 res.json({success:true, data:data})
             }
         }
@@ -112,12 +111,12 @@ const Register = async (req, res)=>{
     const Delete = async (req, res)=>{
         try{
             const id = req.params.id
-            const data = await AdminSchema.findById(id)
+            const data = await UserSchema.findById(id)
             if(!data){
                 res.json({success:false, message:"Not found"})
             }
             else{
-                const DeletedData = await AdminSchema.findByIdAndDelete(id)
+                const DeletedData = await UserSchema.findByIdAndDelete(id)
                 return res.json({success: true, DeletedData: DeletedData})
             }
 
@@ -129,11 +128,12 @@ const Register = async (req, res)=>{
     }
 
 
+
     //UPDATE METHOD
     const Update = async (req, res) => {
         try{
             const {id} = req.params
-            const data = await AdminSchema.findById(id)
+            const data = await UserSchema.findById(id)
             if(!data){
                 return res.json({success:false, message: "Not found"})
             }
@@ -145,7 +145,7 @@ const Register = async (req, res)=>{
                 if (email) {newData.email =  email}
                 if (address) {newData.address =  address}
 
-                const UpdatedData = await AdminSchema.findByIdAndUpdate(id, {$set:newData}, {new:true})
+                const UpdatedData = await UserSchema.findByIdAndUpdate(id, {$set:newData}, {new:true})
                 return res.json({success: true, UpdatedData: UpdatedData})
 
             }
@@ -157,66 +157,5 @@ const Register = async (req, res)=>{
         }
     }
 
-    const AddFood = async (req, res)=>{
-        try{
     
-            const {itemName,price,description} = req.body
-            const error = validationResult(req)
-            if(!error.isEmpty()){
-                const success = false
-                return res.status(400).json({success, error: error.array()})
-            }
-            const check = await MenuSchema.findOne({itemName:itemName})
-            if(check){
-                return res.json({message: "Food Already exist"})
-            }
-            else{
-                // salt is a random number is generated to decrypt the password
-            
-                const data = await new MenuSchema({
-                    //schema name: variable names of this file
-                    itemName:itemName,
-                    price:price,
-                    description:description
-                })
-                
-                await data.save()
-                
-                return res.send({
-                    // data varaible can be anything: data variable of this file
-                    message: "Food added successfull", data: data
-                })
-            }
-        }
-        catch(err){
-            console.log("catch error " + err.message);
-            res.status(500).send("Internal server error !!")
-        }
-    
-    }
-
-
-    const DeleteFood = async (req, res)=>{
-        try{
-            const id = req.params.id
-            const data = await MenuSchema.findById(id)
-            
-
-            if(!data){
-                res.json({success:false, message:"Not found"})
-            }
-            else{
-                const DeletedData = await MenuSchema.findByIdAndDelete(id)
-                return res.json({success: true, DeletedData: DeletedData})
-            }
-
-        }
-        catch(err){
-            console.log("catch error " + err.message);
-            res.status(500).send("Internal server error !!")
-        }
-    }
-
-    
-    
-module.exports = {Register, View, Delete, Update, Login,AddFood,DeleteFood}
+module.exports = {Register, View, Delete, Update, Login}

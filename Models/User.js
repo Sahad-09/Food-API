@@ -3,10 +3,7 @@ const mongoose = require('mongoose')
 const  {Schema} = mongoose
 
 const UserSchema = new Schema({
-    teacher_id:{
-        type: Schema.Types.ObjectId,
-        required: true
-    },
+
     name:{
         type:String,
         require: true

@@ -10,6 +10,23 @@ app.use(express.json())
 
 app.use("/api/admin", require('./Routes/admin_route'))
 
+// admin part
+app.use("/register", express.static('./Register.html'))
+app.use("/addfood", express.static('./Food.html'))
+
+
+
+
+
+// user part
+
+
+
+
+
+
+
+
 app.listen(port, ()=>{
     console.log(`App Listening on port number ${port}`);
 })
