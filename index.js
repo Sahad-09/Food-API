@@ -8,7 +8,7 @@ const app = express()
 
 app.use(express.json())
 
-app.use("/api/teacher", require('./Routes/teacher_route'))
+app.use("/api/admin", require('./Routes/admin_route'))
 
 app.listen(port, ()=>{
     console.log(`App Listening on port number ${port}`);

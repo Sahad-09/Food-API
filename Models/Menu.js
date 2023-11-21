@@ -2,26 +2,18 @@ const mongoose = require('mongoose')
 
 const  {Schema} = mongoose
 
-const AdminSchema = new Schema({
-    name:{
+const MenuSchema = new Schema({
+    itemName:{
         type:String,
         require: true
     },
-    phone:{
-        type:Number,
+    description:{
+        type:String,
         require: true
     },
-    email:{
+    price:{
         type:String,
         unique: true,
-        require: true
-    },
-    password: {
-        type: String,
-        require: true
-    },
-    address:{
-        type:String,
         require: true
     },
    
@@ -31,4 +23,4 @@ const AdminSchema = new Schema({
     },
 })
 
-module.exports=mongoose.model("admin", AdminSchema)
+module.exports=mongoose.model("menu", MenuSchema)
