@@ -1,5 +1,6 @@
 const express = require('express')
 const UserSchema = require('../Models/User')
+const MenuSchema = require('../Models/Menu')
 const { body, validationResult} = require('express-validator')
 
 const bcrypt = require('bcryptjs')
@@ -157,5 +158,57 @@ const Register = async (req, res)=>{
         }
     }
 
+
+    const ViewFood = async (req, res) => {
+        try {
+            let id = req.params.id
+            if (id) {
+                const data = await MenuSchema.findById(id)
+                res.json({ success: true, data: data })
+            }
+            else {
+                const data = await MenuSchema.find()
+                res.json({ success: true, data: data })
+            }
+        }
+        catch (err) {
+            console.log("catch error " + err.message);
+            res.status(500).send("Internal server error !!")
+        }
+    }
+    const AddtoCard = async (req, res) => {
+        try {
     
-module.exports = {Register, View, Delete, Update, Login}
+            const { itemName, price, description } = req.body
+           
+            const check = await MenuSchema.findOne({ itemName: itemName })
+            if (check) {
+                return res.json({ message: "Food Already exist" })
+            }
+            else {
+                // salt is a random number is generated to decrypt the password
+    
+                const data = await new MenuSchema({
+                    //schema name: variable names of this file
+                    itemName: itemName,
+                    price: price,
+                    description: description
+                })
+    
+                await data.save()
+    
+                return res.send({
+                    // data varaible can be anything: data variable of this file
+                    message: "Food added successfull", data: data
+                })
+            }
+        }
+        catch (err) {
+            console.log("catch error " + err.message);
+            res.status(500).send("Internal server error !!")
+        }
+    
+    }
+
+    
+module.exports = {Register, View, Delete, Update, Login, ViewFood,AddtoCard}

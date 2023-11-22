@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="mainCard">
+        <h1>Cards</h1>
+
+        
+        <div id="singleCard">
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let FoodData;
+
+                    axios.get('http://localhost:5000/api/user/viewfood')
+            .then((res)=>{
+                console.log(res.data);
+                FoodData=res.data
+                processFoodData();
+                console.log(FoodData,'FoodData');
+
+
+
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+            const processFoodData=async()=> {
+        console.log(FoodData, 'FoodDataOtSide'); 
+    const menuContainer = document.getElementById('singleCard');
+
+
+        await FoodData?.forEach(item => {
+        const menuItem = document.createElement('div');
+        menuItem.innerHTML = `
+            <h2>${item.itemName}</h2>
+            <p>${item.description}</p>
+            <p>Price: $${item.price}</p>
+            <img  class="image" src="https://ihatetomatoes.net/wp-content/uploads/2020/08/img_greensock-bella-1-sidebar.jpg" alt="">
+        `;
+        menuContainer.appendChild(menuItem);
+    });// Move it here or use it in a function
+    }
+    </script>
+
+
+<!-- <script>
+    // Dummy JSON data
+    const menuData = [
+        {
+            "itemName": "Burger",
+            "description": "A delicious and juicy burger with lettuce, tomato, and cheese.",
+            "price": "10.99"
+        },
+        {
+            "itemName": "Pizza",
+            "description": "A classic Margherita pizza with fresh mozzarella and basil.",
+            "price": "12.99"
+        },
+        {
+            "itemName": "Salad",
+            "description": "A healthy mixed green salad with balsamic vinaigrette dressing.",
+            "price": "7.99"
+        },
+        {
+            "itemName": "Pasta",
+            "description": "Spaghetti with homemade marinara sauce and meatballs.",
+            "price": "9.99"
+        }
+    ];
+
+    // Get the container where the menu will be displayed
+    const menuContainer = document.getElementById('singleCard');
+
+    // Loop through the menu data and create HTML elements
+    FoodData.forEach(item => {
+        const menuItem = document.createElement('div');
+        menuItem.innerHTML = `
+            <h2>${item.itemName}</h2>
+            <p>${item.description}</p>
+            <p>Price: $${item.price}</p>
+            <img  class="image" src="https://ihatetomatoes.net/wp-content/uploads/2020/08/img_greensock-bella-1-sidebar.jpg" alt="">
+        `;
+        menuContainer.appendChild(menuItem);
+    });
+</script> -->
+
+
+
+
+
+</body>
+</html>

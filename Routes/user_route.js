@@ -1,8 +1,8 @@
 const express = require('express')
-const { View, Delete, Update, Register, Login ,AddFood, DeleteFood, ViewFood, UpdateFood} = require('../Controller/Admin_controller')
+const {Register, Login, ViewFood,AddtoCard} = require('../Controller/User_controller')
 const routes = express.Router()
 const {body} = require('express-validator')
-const Auth = require('../middleware/Auth')
+// const Auth = require('../middleware/Auth')
 
 
 
@@ -15,23 +15,14 @@ routes.post('/register',[
 ], Register)
 
 
-//Food Menu API
-routes.post("/addfood",AddFood)
-routes.delete("/deletefood/:id",DeleteFood)
-routes.get("/viewfood",ViewFood)
-routes.get("/viewfood/:id",ViewFood)
-routes.put("/updatefood/:id",UpdateFood)
-
-
 
 routes.post('/login', Login)
 
-routes.get("/view",Auth, View)
+routes.get("/viewfood", ViewFood)
 
-routes.get("/view/:id",Auth, View)
+routes.get("/viewfood/:id", ViewFood)
 
-routes.delete('/delete/:id',Auth, Delete)
+routes.post('/addtocard', AddtoCard)
 
-routes.put('/update/:id',Auth, Update)
 
 module.exports = routes

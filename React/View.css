@@ -1,0 +1,6 @@
+.mainCard{
+    flex-direction: row;
+    display:flex;
+    margin: 10  ;
+
+}
