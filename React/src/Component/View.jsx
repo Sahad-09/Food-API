@@ -25,7 +25,7 @@ GetData()
     },[])
 console.log(data,'DATA');
 
-const AddToCard=(item)=>{
+const AddToCard=async(item)=>{
     console.log('Added to Card');
     console.log(item);
 

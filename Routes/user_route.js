@@ -1,8 +1,8 @@
 const express = require('express')
-const {Register, Login, ViewFood,AddtoCard} = require('../Controller/User_controller')
+const {Register, View, Delete, Update, Login, ViewFood,AddtoCard} = require('../Controller/User_controller')
 const routes = express.Router()
 const {body} = require('express-validator')
-// const Auth = require('../middleware/Auth')
+const Auth = require('../middleware/Auth')
 
 
 
@@ -22,7 +22,10 @@ routes.get("/viewfood", ViewFood)
 
 routes.get("/viewfood/:id", ViewFood)
 
-routes.post('/addtocard', AddtoCard)
+routes.get('/view/:id',Auth, View)
+routes.get('/view',Auth, View)
+routes.delete('/delete/:id',Auth, Delete)
+routes.put('/update/:id',Auth, Update)
 
 
 module.exports = routes
